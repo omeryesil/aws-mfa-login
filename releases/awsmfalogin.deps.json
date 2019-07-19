@@ -1,0 +1,114 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "5f5c950467347996da5b9e3030b586e1201c6786"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.2": {
+      "awsmfalogin/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "System.CommandLine.DragonFruit": "0.3.0-alpha.19317.1"
+        },
+        "runtime": {
+          "awsmfalogin.dll": {}
+        }
+      },
+      "Microsoft.CSharp/4.4.1": {},
+      "Newtonsoft.Json/12.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.2.23222"
+          }
+        }
+      },
+      "System.CommandLine.DragonFruit/0.3.0-alpha.19317.1": {
+        "dependencies": {
+          "System.CommandLine.Experimental": "0.3.0-alpha.19317.1",
+          "System.CommandLine.Rendering": "0.3.0-alpha.19317.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.CommandLine.DragonFruit.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.300.19.31701"
+          }
+        }
+      },
+      "System.CommandLine.Experimental/0.3.0-alpha.19317.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.4.1",
+          "System.Memory": "4.5.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.CommandLine.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.300.19.31701"
+          }
+        }
+      },
+      "System.CommandLine.Rendering/0.3.0-alpha.19317.1": {
+        "dependencies": {
+          "System.CommandLine.Experimental": "0.3.0-alpha.19317.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.CommandLine.Rendering.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.300.19.31701"
+          }
+        }
+      },
+      "System.Memory/4.5.3": {}
+    }
+  },
+  "libraries": {
+    "awsmfalogin/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.CSharp/4.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A5hI3gk6WpcBI0QGZY6/d5CCaYUxJgi7iENn1uYEng+Olo8RfI5ReGVkjXjeu3VR3srLvVYREATXa2M0X7FYJA==",
+      "path": "microsoft.csharp/4.4.1",
+      "hashPath": "microsoft.csharp.4.4.1.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
+      "path": "newtonsoft.json/12.0.2",
+      "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+    },
+    "System.CommandLine.DragonFruit/0.3.0-alpha.19317.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1/s+HWVNwjPMNnijg4dYJftpOBiOHQ703vYn+93cZ7J8TYgDdWtc0OM9y8DNL/2FUPv9aVuaTXS0lOjTl4R/Tg==",
+      "path": "system.commandline.dragonfruit/0.3.0-alpha.19317.1",
+      "hashPath": "system.commandline.dragonfruit.0.3.0-alpha.19317.1.nupkg.sha512"
+    },
+    "System.CommandLine.Experimental/0.3.0-alpha.19317.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nt3PEuabitIDKFyXFqx4VcCluGdAfGuPk0PoOEcjKqqGLGq59xW8fdfpoC9IZ5RDkdTuiqRhms2ToD4ChmyPqw==",
+      "path": "system.commandline.experimental/0.3.0-alpha.19317.1",
+      "hashPath": "system.commandline.experimental.0.3.0-alpha.19317.1.nupkg.sha512"
+    },
+    "System.CommandLine.Rendering/0.3.0-alpha.19317.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OJLFmv32dzuAvLGUx4ipsaMagpv1oy2dGu0ZWEnaEsBBbRnzSqxazp2GykFISwwJlZTsYrsoLEv0XXEoz46Zgw==",
+      "path": "system.commandline.rendering/0.3.0-alpha.19317.1",
+      "hashPath": "system.commandline.rendering.0.3.0-alpha.19317.1.nupkg.sha512"
+    },
+    "System.Memory/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "path": "system.memory/4.5.3",
+      "hashPath": "system.memory.4.5.3.nupkg.sha512"
+    }
+  }
+}

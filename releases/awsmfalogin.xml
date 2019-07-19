@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>awsmfalogin</name>
+    </assembly>
+    <members>
+        <member name="T:AwsUtility.MfaLogin.MfaLogin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AwsUtility.MfaLogin.MfaLogin.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AwsUtility.MfaLogin.MfaLogin.Run(System.String,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="profile"></param>
+            <param name="region"></param>
+            <param name="serialnumber"></param>
+            <param name="tokencode"></param>
+        </member>
+        <member name="M:AwsUtility.MfaLogin.MfaLogin.GetMfaSerial(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="profile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AwsUtility.MfaLogin.MfaLogin.GetConfigValue(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="profile"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
