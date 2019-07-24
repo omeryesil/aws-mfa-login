@@ -52,6 +52,12 @@ namespace AwsUtility.MfaLogin
             //unset environment variabes
             try
             {
+                System.Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", null);
+                System.Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", null);
+                System.Environment.SetEnvironmentVariable("AWS_SESSION_TOKEN", null);
+                System.Environment.SetEnvironmentVariable("AWS_PROFILE", null);
+
+                /*
                 if (OsDetector.IsWindows())
                 {
                     ExecuteCommand($"set AWS_ACCESS_KEY_ID=");
@@ -64,6 +70,7 @@ namespace AwsUtility.MfaLogin
                     ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SECRET_ACCESS_KEY");
                     ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SESSION_TOKEN");
                     ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_PROFILE");
+                    
                 }
                 else
                 {
@@ -72,6 +79,7 @@ namespace AwsUtility.MfaLogin
                     ExecuteCommand($"export AWS_SESSION_TOKEN=\"\"");
                     ExecuteCommand($"export AWS_PROFILE=\"\"");
                 }
+                */
             }
             catch (Exception)
             {
@@ -82,17 +90,24 @@ namespace AwsUtility.MfaLogin
 
             AwsStsGetTokenReturn credentials = JsonConvert.DeserializeObject<AwsStsGetTokenReturn>(result);
 
+            System.Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", credentials.Credentials.AccessKeyId, EnvironmentVariableTarget.User);
+            System.Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", credentials.Credentials.SecretAccessKey, EnvironmentVariableTarget.User);
+            System.Environment.SetEnvironmentVariable("AWS_SESSION_TOKEN", credentials.Credentials.SessionToken, EnvironmentVariableTarget.User);
+            System.Environment.SetEnvironmentVariable("AWS_PROFILE", profile, EnvironmentVariableTarget.User);
+
+            /*
             //unset environment variabes
             if (OsDetector.IsWindows())
-            {
+            {                
                 //set environment variables for AWS CLI
                 ExecuteCommand($"setx AWS_ACCESS_KEY_ID {credentials.Credentials.AccessKeyId}");
                 ExecuteCommand($"setx AWS_SECRET_ACCESS_KEY {credentials.Credentials.SecretAccessKey}");
                 ExecuteCommand($"setx AWS_SESSION_TOKEN {credentials.Credentials.SessionToken}");
-
+                
                 //set environment variable for terraform
                 //if (profile != "default")
                 ExecuteCommand($"setx AWS_PROFILE {profile}");
+                
             }
             else
             {
@@ -105,6 +120,7 @@ namespace AwsUtility.MfaLogin
                 if (profile != "default")
                     ExecuteCommand($"export AWS_PROFILE=\"{profile}\"");
             }
+            */
 
             return result;
         }
