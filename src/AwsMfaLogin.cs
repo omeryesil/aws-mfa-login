@@ -55,6 +55,10 @@ namespace AwsUtility.MfaLogin
                 ExecuteCommand($"setx AWS_ACCESS_KEY_ID \"\"");
                 ExecuteCommand($"setx AWS_SECRET_ACCESS_KEY \"\"");
                 ExecuteCommand($"setx AWS_SESSION_TOKEN \"\"");
+
+                ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_ACCESS_KEY_ID");
+                ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SECRET_ACCESS_KEY");
+                ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SESSION_TOKEN");
             }
             else
             {
