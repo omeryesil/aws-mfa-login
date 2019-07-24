@@ -50,21 +50,32 @@ namespace AwsUtility.MfaLogin
         public string Run(string profile, string region, string serialnumber, string tokencode)
         {
             //unset environment variabes
-            if (OsDetector.IsWindows())
+            try
             {
-                ExecuteCommand($"setx AWS_ACCESS_KEY_ID \"\"");
-                ExecuteCommand($"setx AWS_SECRET_ACCESS_KEY \"\"");
-                ExecuteCommand($"setx AWS_SESSION_TOKEN \"\"");
+                if (OsDetector.IsWindows())
+                {
+                    ExecuteCommand($"set AWS_ACCESS_KEY_ID=");
+                    ExecuteCommand($"set AWS_SECRET_ACCESS_KEY=");
+                    ExecuteCommand($"set AWS_SESSION_TOKEN=");
+                    ExecuteCommand($"set AWS_PROFILE=");
 
-                ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_ACCESS_KEY_ID");
-                ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SECRET_ACCESS_KEY");
-                ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SESSION_TOKEN");
+                    //if case there is an issue to remove the environment varialbe with the code above
+                    ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_ACCESS_KEY_ID");
+                    ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SECRET_ACCESS_KEY");
+                    ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_SESSION_TOKEN");
+                    ExecuteCommand("REG delete HKCU\\Environment /F /V AWS_PROFILE");
+                }
+                else
+                {
+                    ExecuteCommand($"export AWS_ACCESS_KEY_ID=\"\"");
+                    ExecuteCommand($"export AWS_SECRET_ACCESS_KEY=\"\"");
+                    ExecuteCommand($"export AWS_SESSION_TOKEN=\"\"");
+                    ExecuteCommand($"export AWS_PROFILE=\"\"");
+                }
             }
-            else
+            catch (Exception)
             {
-                ExecuteCommand($"export AWS_ACCESS_KEY_ID=\"\"");
-                ExecuteCommand($"export AWS_SECRET_ACCESS_KEY=\"\"");
-                ExecuteCommand($"export AWS_SESSION_TOKEN=\"\"");
+                Console.WriteLine("Failed while deleting environment variables, but that is OK");
             }
 
             string result = ExecuteCommand($"aws sts get-session-token --profile {profile} --serial-number {serialnumber} --token-code {tokencode}");
@@ -80,8 +91,8 @@ namespace AwsUtility.MfaLogin
                 ExecuteCommand($"setx AWS_SESSION_TOKEN {credentials.Credentials.SessionToken}");
 
                 //set environment variable for terraform
-                if (profile != "default")
-                    ExecuteCommand($"setx AWS_PROFILE {profile}");
+                //if (profile != "default")
+                ExecuteCommand($"setx AWS_PROFILE {profile}");
             }
             else
             {

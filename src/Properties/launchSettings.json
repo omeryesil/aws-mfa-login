@@ -2,7 +2,7 @@
   "profiles": {
     "AwsUtility.MfaLogin": {
       "commandName": "Project",
-      "commandLineArgs": "--profile default"
+      "commandLineArgs": "--profile dev"
     }
   }
 }
