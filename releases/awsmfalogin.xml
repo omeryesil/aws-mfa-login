@@ -30,6 +30,13 @@
             <param name="profile"></param>
             <returns></returns>
         </member>
+        <member name="M:AwsUtility.MfaLogin.MfaLogin.GetRegion(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="profile"></param>
+            <returns></returns>
+        </member>
         <member name="M:AwsUtility.MfaLogin.MfaLogin.GetConfigValue(System.String,System.String)">
             <summary>
             
@@ -37,6 +44,10 @@
             <param name="profile"></param>
             <param name="key"></param>
             <returns></returns>
+        </member>
+        <member name="T:AwsUtility.MfaLogin.ProcessExecuter">
+            
+            
         </member>
     </members>
 </doc>

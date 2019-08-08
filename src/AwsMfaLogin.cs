@@ -86,17 +86,22 @@ namespace AwsUtility.MfaLogin
                 Console.WriteLine("Failed while deleting environment variables, but that is OK");
             }
 
-            string result = ExecuteCommand($"aws sts get-session-token --profile {profile} --serial-number {serialnumber} --token-code {tokencode}");
+            Console.WriteLine($"Log : aws sts get-session-token --profile {profile} --serial-number {serialnumber} --token-code {tokencode}");
+            //string result = ExecuteCommand($"aws sts get-session-token --profile {profile} --serial-number {serialnumber} --token-code {tokencode}");
+
+            string result = ProcessExecuter.ExecuteCommand($"aws sts get-session-token --profile {profile} --serial-number {serialnumber} --token-code {tokencode}");
 
             AwsStsGetTokenReturn credentials = JsonConvert.DeserializeObject<AwsStsGetTokenReturn>(result);
 
+            Console.WriteLine("Log : Setting environment variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN, AWS_PROFILE");
+            
             System.Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", credentials.Credentials.AccessKeyId, EnvironmentVariableTarget.User);
             System.Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", credentials.Credentials.SecretAccessKey, EnvironmentVariableTarget.User);
             System.Environment.SetEnvironmentVariable("AWS_SESSION_TOKEN", credentials.Credentials.SessionToken, EnvironmentVariableTarget.User);
             System.Environment.SetEnvironmentVariable("AWS_PROFILE", profile, EnvironmentVariableTarget.User);
 
+            //set environment variabes
             /*
-            //unset environment variabes
             if (OsDetector.IsWindows())
             {                
                 //set environment variables for AWS CLI
@@ -108,19 +113,33 @@ namespace AwsUtility.MfaLogin
                 //if (profile != "default")
                 ExecuteCommand($"setx AWS_PROFILE {profile}");
                 
-            }
-            else
+            } */
+            if (!OsDetector.IsWindows())
             {
-                //set environment variables for AWS CLI
-                ExecuteCommand($"export AWS_ACCESS_KEY_ID=\"{credentials.Credentials.AccessKeyId}\"");
-                ExecuteCommand($"export AWS_SECRET_ACCESS_KEY=\"{credentials.Credentials.SecretAccessKey}\"");
-                ExecuteCommand($"export AWS_SESSION_TOKEN=\"{credentials.Credentials.SessionToken}\"");
+                System.Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", credentials.Credentials.AccessKeyId);
+                System.Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", credentials.Credentials.SecretAccessKey);
+                System.Environment.SetEnvironmentVariable("AWS_SESSION_TOKEN", credentials.Credentials.SessionToken);
+                System.Environment.SetEnvironmentVariable("AWS_PROFILE", profile);
 
-                //set environment variable for terraform
-                if (profile != "default")
-                    ExecuteCommand($"export AWS_PROFILE=\"{profile}\"");
-            }
-            */
+                ////set environment variables for AWS CLI
+                //ProcessExecuter.ExecuteCommand($"export AWS_ACCESS_KEY_ID={credentials.Credentials.AccessKeyId}");
+                //ProcessExecuter.ExecuteCommand($"export AWS_SECRET_ACCESS_KEY={credentials.Credentials.SecretAccessKey}");
+                //ProcessExecuter.ExecuteCommand($"export AWS_SESSION_TOKEN={credentials.Credentials.SessionToken}");
+
+                ////set environment variable for terraform
+                //ProcessExecuter.ExecuteCommand($"export AWS_PROFILE=\"{profile}\"");
+
+                Console.WriteLine("Dotnetcore has an issue to update environment variables. If they are not set, run the following commands manually:") ;
+                Console.WriteLine($"export AWS_ACCESS_KEY_ID=\"{credentials.Credentials.AccessKeyId}\"" + 
+                   $" && export AWS_SECRET_ACCESS_KEY=\"{credentials.Credentials.SecretAccessKey}\"" + 
+                   $" && export AWS_SESSION_TOKEN=\"{credentials.Credentials.SessionToken}\"" + 
+                   $" && export AWS_PROFILE=\"{profile}\"\n");
+                Console.WriteLine($"_________________________________________________________________");
+
+
+
+            }  
+       
 
             return result;
         }
@@ -135,6 +154,11 @@ namespace AwsUtility.MfaLogin
             return GetConfigValue(profile, "mfa_serial");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profile"></param>
+        /// <returns></returns>
         public string GetRegion(string profile)
         {
             return GetConfigValue(profile, "region");
@@ -180,40 +204,6 @@ namespace AwsUtility.MfaLogin
 
         }
 
-        private string ExecuteCommand(string command)
-        {
-            var escapedArgs = command.Replace("\"", "\\\"");
-
-            ProcessStartInfo procStartInfo = OsDetector.IsWindows() ?
-                                        new ProcessStartInfo("cmd", "/c " + escapedArgs) :
-                                        new ProcessStartInfo("/bin/bash", $"-c \"{escapedArgs}\"");
-
-            procStartInfo.RedirectStandardOutput = true;
-            procStartInfo.RedirectStandardError = true;
-
-            procStartInfo.UseShellExecute = false;
-            procStartInfo.CreateNoWindow = false;
-
-            // wrap IDisposable into using (in order to release hProcess) 
-            using (Process process = new Process())
-            {
-                process.StartInfo = procStartInfo;
-                process.Start();
-
-                // Add this: wait until process does its work
-                process.WaitForExit();
-
-                // and only then read the result
-                string result = process.StandardOutput.ReadToEnd();
-                if (String.IsNullOrEmpty(result))
-                {
-                    throw new Exception(process.StandardError.ReadToEnd());
-                }
-
-                return result;
-            }
-
-        }
     }
 
 
