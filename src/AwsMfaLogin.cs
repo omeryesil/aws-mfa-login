@@ -130,14 +130,13 @@ namespace AwsUtility.MfaLogin
                 //ProcessExecuter.ExecuteCommand($"export AWS_PROFILE=\"{profile}\"");
 
                 Console.WriteLine("Dotnetcore has an issue to update environment variables. If they are not set, run the following commands manually:") ;
+                Console.WriteLine($"-----------------------------------------");
                 Console.WriteLine($"export AWS_ACCESS_KEY_ID=\"{credentials.Credentials.AccessKeyId}\"" + 
                    $" && export AWS_SECRET_ACCESS_KEY=\"{credentials.Credentials.SecretAccessKey}\"" + 
                    $" && export AWS_SESSION_TOKEN=\"{credentials.Credentials.SessionToken}\"" + 
                    $" && export AWS_PROFILE=\"{profile}\"\n");
-                Console.WriteLine($"_________________________________________________________________");
-
-
-
+                Console.WriteLine($"-----------------------------------------");
+                
             }  
        
 
