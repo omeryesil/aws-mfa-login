@@ -101,20 +101,20 @@ namespace AwsUtility.MfaLogin
             System.Environment.SetEnvironmentVariable("AWS_PROFILE", profile, EnvironmentVariableTarget.User);
 
             //set environment variabes
-            /*
+            
             if (OsDetector.IsWindows())
             {                
                 //set environment variables for AWS CLI
-                ExecuteCommand($"setx AWS_ACCESS_KEY_ID {credentials.Credentials.AccessKeyId}");
-                ExecuteCommand($"setx AWS_SECRET_ACCESS_KEY {credentials.Credentials.SecretAccessKey}");
-                ExecuteCommand($"setx AWS_SESSION_TOKEN {credentials.Credentials.SessionToken}");
+                ProcessExecuter.ExecuteCommand($"setx AWS_ACCESS_KEY_ID {credentials.Credentials.AccessKeyId}");
+                ProcessExecuter.ExecuteCommand($"setx AWS_SECRET_ACCESS_KEY {credentials.Credentials.SecretAccessKey}");
+                ProcessExecuter.ExecuteCommand($"setx AWS_SESSION_TOKEN {credentials.Credentials.SessionToken}");
                 
                 //set environment variable for terraform
                 //if (profile != "default")
-                ExecuteCommand($"setx AWS_PROFILE {profile}");
+                ProcessExecuter.ExecuteCommand($"setx AWS_PROFILE {profile}");
                 
-            } */
-            if (!OsDetector.IsWindows())
+            } 
+            else if (!OsDetector.IsWindows())
             {
                 System.Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", credentials.Credentials.AccessKeyId);
                 System.Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", credentials.Credentials.SecretAccessKey);
