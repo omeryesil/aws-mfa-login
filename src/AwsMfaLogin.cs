@@ -129,14 +129,24 @@ namespace AwsUtility.MfaLogin
                 ////set environment variable for terraform
                 //ProcessExecuter.ExecuteCommand($"export AWS_PROFILE=\"{profile}\"");
 
-                Console.WriteLine("Dotnetcore has an issue to update environment variables. If they are not set, run the following commands manually:") ;
-                Console.WriteLine($"-----------------------------------------");
-                Console.WriteLine($"export AWS_ACCESS_KEY_ID=\"{credentials.Credentials.AccessKeyId}\"" + 
+
+                string fileContent = $"export AWS_ACCESS_KEY_ID=\"{credentials.Credentials.AccessKeyId}\"" + 
                    $" && export AWS_SECRET_ACCESS_KEY=\"{credentials.Credentials.SecretAccessKey}\"" + 
                    $" && export AWS_SESSION_TOKEN=\"{credentials.Credentials.SessionToken}\"" + 
-                   $" && export AWS_PROFILE=\"{profile}\"\n");
+                   $" && export AWS_PROFILE=\"{profile}\"";
+
+                Console.WriteLine("Dotnetcore has an issue to update environment variables. If they are not set, run the following commands manually:") ;
                 Console.WriteLine($"-----------------------------------------");
-                
+                Console.WriteLine(fileContent);
+                Console.WriteLine($"-----------------------------------------");
+
+                        // Write the string array to a new file named "WriteLines.txt".
+                using (StreamWriter outputFile = new StreamWriter("aws.env"))
+                {
+                    outputFile.Write(fileContent);
+                }
+
+                Console.WriteLine($"Call: '$ source aws.env' to load environment variables.. ");
             }  
        
 

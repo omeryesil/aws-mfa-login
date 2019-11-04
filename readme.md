@@ -26,7 +26,7 @@ AWS_PROFILE is used for Terraform
 ### With all parameters
 
 ```shell
-dotnet awsmfalogin.dll --profile osram --region us-east-2 --serialnumber arn:aws:iam::172564481277:mfa/o.yesil-ext@osram.com --tokencode 12312
+dotnet awsmfalogin.dll --profile osram --region us-east-2 --serialnumber arn:aws:iam::12345657:mfa/youremail --tokencode 12312
 ```
 
 ### With Profile 
